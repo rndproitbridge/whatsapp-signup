@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>WhatsApp Embedded Signup</title>
+  <title>ProitBridge WhatsApp Signup</title>
   <style>
-    body { font-family: Arial; padding: 50px; text-align: center; }
+    body { font-family: Arial, sans-serif; padding: 50px; text-align: center; background: #f5f5f5; }
+    h1 { color: #25D366; }
     button { padding: 15px 30px; font-size: 18px; background: #1877f2; color: white; border: none; border-radius: 8px; cursor: pointer; }
     button:hover { background: #145dbf; }
-    #result { margin-top: 30px; padding: 20px; background: #f0f0f0; border-radius: 8px; word-wrap: break-word; }
+    #result { margin-top: 30px; padding: 20px; background: white; border-radius: 8px; word-wrap: break-word; text-align: left; white-space: pre-wrap; }
   </style>
 </head>
 <body>
 
 <h1>ProitBridge — WhatsApp Setup</h1>
+<p>Click below to connect your WhatsApp Business number via Meta.</p>
 <button onclick="launchWhatsAppSignup()">Continue with Facebook</button>
 <div id="result"></div>
 
 <script>
   window.fbAsyncInit = function() {
     FB.init({
-      appId: 'YOUR_APP_ID_HERE',
+      appId: '1014153814517492',
       cookie: true,
       xfbml: true,
       version: 'v21.0'
@@ -38,26 +40,26 @@
     try {
       const data = JSON.parse(event.data);
       if (data.type === 'WA_EMBEDDED_SIGNUP') {
-        document.getElementById('result').innerHTML = '<b>Session Info:</b><br>' + JSON.stringify(data, null, 2);
+        document.getElementById('result').innerText = 'Session Info:\n' + JSON.stringify(data, null, 2);
         console.log('Session Info:', data);
       }
-    } catch {}
+    } catch (e) { /* ignore */ }
   };
   window.addEventListener('message', sessionInfoListener);
 
   const fbLoginCallback = (response) => {
     if (response.authResponse) {
       const code = response.authResponse.code;
-      document.getElementById('result').innerHTML += '<br><br><b>Auth Code:</b><br>' + code;
+      document.getElementById('result').innerText += '\n\nAuth Code: ' + code;
       console.log('Code:', code);
     } else {
-      document.getElementById('result').innerHTML = '<b>Login cancelled or failed.</b>';
+      document.getElementById('result').innerText = 'Login cancelled or failed.';
     }
   };
 
   const launchWhatsAppSignup = () => {
     FB.login(fbLoginCallback, {
-      config_id: '1014153814517492',
+      config_id: '1672267217313719',
       response_type: 'code',
       override_default_response_type: true,
       extras: {
